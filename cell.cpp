@@ -1,9 +1,6 @@
 #include "cell.h"
 
-Cell::Cell()
-{
-
-}
+Cell::Cell(){}
 
 void Cell::setPosition(uint8_t row, uint8_t column)
 {

@@ -29,45 +29,18 @@ void homePage()
   if (previous_page != 0)
     resetScreen();
   
-  
-
   xSemaphoreGive( menu_semaphore );
 }
 
-void setWord()
+void blinkWordle()
 {
-  static uint8_t jkl = 0;
-
-  if (jkl) return;
-
-  uint8_t index = rand() % 50;
-  actual_word = words[index];
-
-  jkl = 1;
-  
-  for (int i = 0; i < 5; i++)
-    if (actual_word[i] > 96)
-      actual_word[i] = actual_word[i] - 97 + 65;
-
-  for (int i = 0; i < 5; i++) 
-    Serial.print(actual_word[i]);
-  Serial.println(".");
+  rows[current_row].blinkSelectedCell(current_index);
 }
 
 void drawWordle()
 {
-  static uint8_t prev_index;
-
-  if (middle_button->getPress() == PRESSED)
-  {
-    // setWord();
-    rows[current_row].setLetter(letter_input, current_index);
-    
-    if (current_index < 4)
-      current_index++;
-  }
-
-  rows[current_row].blinkSelectedCell(current_index);
+  for (int i = 0; i < 6; i++)
+    rows[i].drawRow();
 }
 
 void drawLetterInput()
@@ -85,6 +58,34 @@ void drawLetterInput()
   display.setTextSize(3);
 }
 
+void blinkKey()
+{
+  static Key* prev_key;
+  static uint8_t draw_timer;
+  static uint8_t draw_state;
+  static uint8_t blink_state;
+
+  if (prev_key != curr_key)
+  {
+    prev_key->drawKey(display);
+    curr_key->drawKey(display, 1);
+    prev_key = curr_key;
+  }
+
+  if ((millis() / 500) % 2 == draw_state)
+    return;
+
+  draw_state = (millis() / 500) % 2;
+  blink_state = !blink_state;
+  curr_key->drawKey(display, blink_state);
+}
+
+void drawKeyboard()
+{
+  for (int i = 0; i < 26; i++)
+    keyboard[i].drawKey(display);
+}
+
 static void drawScreen(void* pvParameters)
 {
   static TickType_t prev_wake_time = 0;
@@ -97,12 +98,14 @@ static void drawScreen(void* pvParameters)
     if (!xSemaphoreTake(page_semaphore, portMAX_DELAY))
       continue;
 
-    drawWordle();
-
-    drawLetterInput();
+    if (current_page == 1)
+      blinkWordle();
+    else
+      blinkKey();
+    // drawLetterInput();
 
     // pages[current_page]();
-    // previous_page = current_page;
+    previous_page = current_page;
 
     xSemaphoreGive( page_semaphore );
   }

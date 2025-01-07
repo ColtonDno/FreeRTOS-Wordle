@@ -7,7 +7,7 @@
 #define CELL_SIZE 40
 #define ROW_COUNT 6
 #define BOX_SIZE 30
-#define X_CORRECTION 10
+#define X_CORRECTION 60
 #define CELL_SPACING 5
 #define LETTER_X_OFFSET 8
 #define LETTER_Y_OFFSET 5
