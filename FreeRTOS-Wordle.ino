@@ -1,11 +1,14 @@
 #include "variables.h"
 #include "screen_tasks.h"
 #include "button_tasks.h"
+// #include "word_list.h"
 
 /* To-Do
  *---------------------
  * Keyboard
  * * Animation
+ * Word list
+ * Check for real word
  * Home page UI
  * Get today's word from web 
  * Allow user to input word
@@ -74,6 +77,9 @@ void setup()
   resetScreen();
   delay(3000);
 
+  // for (int i = 0; i < 5; i++)
+    // Serial.println(word_list[0][i]);
+
   digitalWrite(LED_BUILTIN, LOW);
 
   menu_semaphore = xSemaphoreCreateMutex();
@@ -85,6 +91,8 @@ void setup()
     rows[i].setDisplay(display);
     rows[i].drawRow();
   }
+
+  // xTaskCreate(handleAlarm,   "Task F", 256, NULL, 5, &Handle_alarmTask);
 
   xTaskCreate(updateButtons, "Task A", 256, NULL, 4, &Handle_buttonTask);
   xTaskCreate(handleInput,   "Task B", 256, NULL, 3, &Handle_menuTask);

@@ -7,7 +7,8 @@
 #include "wordle_row.h"
 #include "key.h"
 #include "word_list.h"
-#include "possible_words.h"
+#include "formatted_la_list.h"
+#include "queue_template.h"
 
 #define Terminal Serial
 #define BUZZERPIN 12

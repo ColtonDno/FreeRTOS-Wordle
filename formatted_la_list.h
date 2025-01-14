@@ -1,6 +1,3 @@
-#ifndef _POSSIBLE_WORDS_
-#define _POSSIBLE_WORDS_
-
 char possible_words[2315][5] PROGMEM = {
 'A','B','A','C','K',
 'A','B','A','S','E',
@@ -2318,5 +2315,3 @@ char possible_words[2315][5] PROGMEM = {
 'Z','E','S','T','Y',
 'Z','O','N','A','L',
 };
-
-#endif

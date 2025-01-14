@@ -1,6 +1,9 @@
 #include "key.h"
 
-Key::Key(){}
+Key::Key()
+{
+
+}
 
 void Key::setPosition(uint16_t row, uint16_t column)
 {

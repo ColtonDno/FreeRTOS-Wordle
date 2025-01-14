@@ -1,6 +1,7 @@
 #ifndef _WORD_LIST_HHH_
 #define _WORD_LIST_HHH_
 
+// extern char word_list[12972][5];
 char word_list[12972][5] = {
 'A','A','H','E','D',
 'A','A','L','I','I',
